@@ -1,5 +1,6 @@
 // server.ts — đặt ở root project, cạnh package.json
 
+import path from "path";
 import express from "express";
 import { GoogleGenAI } from "@google/genai";
 import "dotenv/config";
@@ -118,4 +119,10 @@ app.post("/api/chat", async (req, res) => {
 });
 
 const PORT = process.env.PORT || 3001;
+
+// Serve frontend build
+app.use(express.static(path.join(__dirname, "dist")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
 app.listen(PORT, () => console.log(`✅ EduAgent server running on :${PORT}`));
