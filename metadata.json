@@ -1,0 +1,6 @@
+{
+  "name": "Smart Education Agents",
+  "description": "A collaborative multi-agent educational chat platform focused on tutoring, exam preparation, and question solving.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
