@@ -1,15 +1,19 @@
 // server.ts — đặt ở root project, cạnh package.json
 
-import path from "path";
 import express from "express";
 import { GoogleGenAI } from "@google/genai";
 import "dotenv/config";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 app.use(express.json());
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
-const MODEL = "gemini-2.5-flash";
+const MODEL = "gemini-2.0-flash";
 
 // ─────────────────────────────────────────
 // System Prompts
@@ -118,11 +122,13 @@ app.post("/api/chat", async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 3001;
-
-// Serve frontend build
+// ─────────────────────────────────────────
+// Serve frontend (sau khi npm run build)
+// ─────────────────────────────────────────
 app.use(express.static(path.join(__dirname, "dist")));
-app.get("*", (req, res) => {
+app.get("*", (_req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
+
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => console.log(`✅ EduAgent server running on :${PORT}`));
